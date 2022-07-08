@@ -23,6 +23,7 @@
   >
     Зарегистрироваться
   </basic-button>
+  <p class="form-reg__alert">⚠️ : {{unregisteredMessage}}</p>
 </form>
 </template>
 
@@ -38,6 +39,7 @@ export default defineComponent({
         login: '',
         password: '',
       },
+      unregisteredMessage: '',
     }
   },
   computed: {
@@ -61,6 +63,9 @@ export default defineComponent({
       if (resObj.status === 'registered') {
         this.$router.push('/login')
       }
+      if (resObj.status === 'unregistered') {
+        this.unregisteredMessage = resObj.message
+      }
     })
   },
 })
@@ -77,5 +82,13 @@ export default defineComponent({
 .form-reg__input {
   width: 300px;
   margin: 5px;
+}
+
+.form-reg__alert {
+  text-align: center;
+  width: 300px;
+  margin: 5px;
+  font-size: 12pt;
+  color: var(--color-2);
 }
 </style>
