@@ -19,7 +19,7 @@ export default defineComponent({
     MainNavigation,
   },
   mounted() {
-    if (this.$store.state.sessions.auth) {
+    if (this.$store.state.sessions.sessions.auth) {
       this.$router.push('/chat')
     } else {
       this.$router.push('/login')

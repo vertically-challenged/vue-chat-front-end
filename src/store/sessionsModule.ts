@@ -15,6 +15,7 @@ const sessionsModule = {
       state.sessions.auth = false
     },
   },
+  namespaced: true,
 }
 
 export default sessionsModule

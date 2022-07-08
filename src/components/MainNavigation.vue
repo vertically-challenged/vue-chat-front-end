@@ -32,7 +32,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   methods: {
     logout() {
-      this.$store.commit('logout')
+      this.$store.commit('sessions/logout')
       this.$router.push('/login')
     },
   },

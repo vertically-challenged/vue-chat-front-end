@@ -12,7 +12,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   methods: {
     login() {
-      this.$store.commit('login')
+      this.$store.commit('sessions/login')
       this.$router.push('/chat')
     },
   },
