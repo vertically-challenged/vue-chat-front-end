@@ -23,7 +23,7 @@
   >
     Зарегистрироваться
   </basic-button>
-  <p class="form-reg__alert">⚠️ : {{unregisteredMessage}}</p>
+  <p v-if="unregisteredMessage" class="form-reg__alert">⚠️ : {{unregisteredMessage}}</p>
 </form>
 </template>
 

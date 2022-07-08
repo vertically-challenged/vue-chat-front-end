@@ -2,7 +2,7 @@
 const sessionsModule = {
   state: () => ({
     sessions: {
-      auth: true,
+      auth: Boolean(localStorage.getItem('session_key')),
     },
   }),
   mutations: {
