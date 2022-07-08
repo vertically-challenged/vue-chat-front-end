@@ -19,4 +19,8 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
+.chat {
+  padding: 10px;
+  max-width: 100vw;
+}
 </style>

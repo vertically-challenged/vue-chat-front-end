@@ -67,7 +67,7 @@ export default defineComponent({
 .message-list {
   list-style: none;
   height: 400px;
-  max-height: 90vh;
+  max-height: calc(90vh - 150px);
   overflow-y: scroll;
   border-radius: 18px;
 }
@@ -80,6 +80,7 @@ export default defineComponent({
   color: var(--color-2);
 }
 .message {
+  display: flex;
   max-width: 360px;
   padding: 15px;
   background: var(--color-8);
@@ -89,5 +90,21 @@ export default defineComponent({
 
 .message:last-child {
   margin-bottom: 0;
+}
+
+@media (max-width: 450px) {
+  .message {
+    width: 80%;
+    max-width: 300px;
+  }
+
+  .message-list {
+    height: 76vh;
+  }
+
+  .message-list::-webkit-scrollbar {
+    display: none;
+  }
+
 }
 </style>

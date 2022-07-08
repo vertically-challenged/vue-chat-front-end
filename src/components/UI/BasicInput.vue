@@ -3,7 +3,7 @@
   <span class="hidden">
     <slot></slot>
   </span>
-  <input :placeholder="placeholder" class="input" :type="type" id="login" />
+  <input :placeholder="placeholder" class="input" :type="type"/>
 </label>
 </template>
 

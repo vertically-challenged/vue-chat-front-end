@@ -1,4 +1,5 @@
 <template>
+<main-navigation/>
 <div class="container">
   <router-view />
 </div>
@@ -6,9 +7,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import MainNavigation from '@/components/MainNavigation.vue'
 
 export default defineComponent({
+  data() {
+    return {
 
+    }
+  },
+  components: {
+    MainNavigation,
+  },
+  mounted() {
+    if (this.$store.state.sessions.auth) {
+      this.$router.push('/chat')
+    } else {
+      this.$router.push('/login')
+    }
+  },
+  methods: {
+  },
 })
 </script>
 
@@ -42,11 +60,9 @@ body {
 
 .container {
   position: fixed;
-  top: 0;
-  bottom: 0;
+  top: calc(50vh - 250px);
   left: 0;
   right: 0;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,12 +76,18 @@ body {
 
 ::-webkit-scrollbar-thumb {
   width: 6px;
-  background-color: #b1b1b1;
+  background-color: #b1b1b176;
   border-radius: 9em;
 }
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 450px), (max-height: 600px) {
+  .container {
+    top: 50px;
+  }
 }
 
 </style>
