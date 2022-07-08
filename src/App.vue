@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
 import MainNavigation from '@/components/MainNavigation.vue'
 
 export default defineComponent({
@@ -18,8 +19,14 @@ export default defineComponent({
   components: {
     MainNavigation,
   },
+  computed: {
+    ...mapState({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      auth: (state: any) => (state.sessions.sessions.auth),
+    }),
+  },
   mounted() {
-    if (this.$store.state.sessions.sessions.auth) {
+    if (this.auth) {
       this.$router.push('/chat')
     } else {
       this.$router.push('/login')

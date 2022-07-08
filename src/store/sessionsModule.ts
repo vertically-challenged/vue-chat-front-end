@@ -5,8 +5,6 @@ const sessionsModule = {
       auth: true,
     },
   }),
-  getters: {
-  },
   mutations: {
     login(state: any) {
       state.sessions.auth = true

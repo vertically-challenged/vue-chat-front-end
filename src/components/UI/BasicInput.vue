@@ -1,9 +1,12 @@
 <template>
 <label for="login">
-  <span class="hidden">
-    <slot></slot>
-  </span>
-  <input :placeholder="placeholder" class="input" :type="type"/>
+  <input
+    :placeholder="placeholder"
+    class="input"
+    :type="type"
+    :value="modelValue"
+    @input="updateInput"
+  />
 </label>
 </template>
 
@@ -16,6 +19,13 @@ export default defineComponent({
   props: {
     type: String,
     placeholder: String,
+    modelValue: String,
+  },
+
+  methods: {
+    updateInput(event: Event) {
+      this.$emit('update:modelValue', (event.target as HTMLInputElement).value)
+    },
   },
 })
 </script>

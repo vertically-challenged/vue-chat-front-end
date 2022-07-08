@@ -2,14 +2,14 @@
   <nav class="main-navigation">
     <div class="main-navigation__container">
       <router-link
-        v-if="!$store.state.sessions.sessions.auth"
+        v-if="!auth"
         class="main-navigation__link"
         to="/login"
       >
         Войти
       </router-link>
       <router-link
-        v-if="!$store.state.sessions.sessions.auth"
+        v-if="!auth"
         class="main-navigation__link"
         to="/reg"
       >
@@ -17,7 +17,7 @@
       </router-link>
       <button
         @click="logout"
-        v-if="$store.state.sessions.sessions.auth"
+        v-if="auth"
         class="main-navigation__link"
       >
         Выйти
@@ -28,8 +28,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
 
 export default defineComponent({
+  computed: {
+    ...mapState({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      auth: (state: any) => (state.sessions.sessions.auth),
+    }),
+  },
   methods: {
     logout() {
       this.$store.commit('sessions/logout')
