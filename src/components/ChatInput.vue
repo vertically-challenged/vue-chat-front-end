@@ -4,9 +4,14 @@
     class="chat-input"
     placeholder="Сообщение..."
     contenteditable
+    ref="inputRef"
     @input="changeInput"
   ></div>
-  <button class="chat-input__button" type="submit">
+  <button
+    class="chat-input__button"
+    type="submit"
+    @click="sendMessage"
+  >
     <img src="@/icons/icons-submit-button.png" alt="Отправить">
   </button>
 </div>
@@ -25,6 +30,13 @@ export default defineComponent({
     changeInput(event: Event) {
       if (event.target) {
         this.message = (event.target as HTMLDivElement).innerText
+      }
+    },
+    sendMessage() {
+      if (this.message) {
+        this.$emit('sendMessage', this.message)
+        this.message = '';
+        (this.$refs.inputRef as HTMLDivElement).innerText = ''
       }
     },
   },
