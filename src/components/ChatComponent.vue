@@ -1,17 +1,17 @@
 <template>
 <section class="chat">
   <message-list :messages="messages"></message-list>
-  <chat-input @sendMessage="sendMessage"></chat-input>
+  <chat-input></chat-input>
 </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
 import ChatInput from './ChatInput.vue'
 import MessageList from './MessageList.vue'
 
 interface IMessage {
-  id: number
   userId: number
   text: string
 }
@@ -20,7 +20,6 @@ export default defineComponent({
   data() {
     const messages: Array<IMessage> = [
       {
-        id: 123,
         userId: 123,
         text: 'Lorem',
       },
@@ -33,14 +32,23 @@ export default defineComponent({
     ChatInput,
     MessageList,
   },
-  methods: {
-    sendMessage(message: string) {
-      this.messages.push({
-        id: 0,
-        userId: Number(localStorage.getItem('user_id')),
-        text: message,
-      })
-    },
+  computed: {
+    ...mapState({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ws: (state: any) => (state.ws.ws),
+    }),
+  },
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.ws.addEventListener('message', (res: any) => {
+      const resObj = JSON.parse(res.data)
+      if (resObj.status === 'new_message') {
+        this.messages.push({
+          userId: resObj.userId,
+          text: resObj.message,
+        })
+      }
+    })
   },
 })
 
