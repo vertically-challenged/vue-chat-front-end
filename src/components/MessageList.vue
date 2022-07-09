@@ -3,7 +3,7 @@
   <ul ref="messageList" class="message-list">
     <div class="message__container" v-for="(message, index) in messages" :key="message.id">
       <li class="message">
-        {{message.text}}
+        <pre>{{message.text}}</pre>
       </li>
       <visibility-sensor
         v-if="messages.length - 1 === index"
