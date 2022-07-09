@@ -39,6 +39,13 @@ export default defineComponent({
     }),
   },
   mounted() {
+    this.ws.send(JSON.stringify({
+      type: 'get_dialog_list',
+      userId: localStorage.getItem('user_id'),
+      sessionId: localStorage.getItem('session_id'),
+      sessionKey: localStorage.getItem('session_key'),
+    }))
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.ws.addEventListener('message', (res: any) => {
       const resObj = JSON.parse(res.data)
@@ -47,6 +54,13 @@ export default defineComponent({
           userId: resObj.userId,
           text: resObj.message,
         })
+      }
+      if (resObj.status === 'get_dialog_list') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.messages = resObj.messages.map((message: any) => ({
+          userId: message.sender,
+          text: message.message,
+        }))
       }
     })
   },
