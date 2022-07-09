@@ -37,6 +37,14 @@ export default defineComponent({
       console.log('STATUS: ', this.scroll)
     },
   },
+  updated() {
+    console.log('UPDATED')
+    if (this.scroll) {
+      ((this.$refs.messageList as HTMLDivElement)
+        .childNodes[(this.$refs.messageList as HTMLDivElement)
+          .childNodes.length - 2] as HTMLDivElement).scrollIntoView()
+    }
+  },
 })
 </script>
 
