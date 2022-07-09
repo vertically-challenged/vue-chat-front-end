@@ -18,12 +18,7 @@ interface IMessage {
 
 export default defineComponent({
   data() {
-    const messages: Array<IMessage> = [
-      {
-        userId: 123,
-        text: 'Lorem',
-      },
-    ]
+    const messages: Array<IMessage> = []
     return {
       messages,
     }
@@ -39,12 +34,14 @@ export default defineComponent({
     }),
   },
   mounted() {
-    this.ws.send(JSON.stringify({
-      type: 'get_dialog_list',
-      userId: localStorage.getItem('user_id'),
-      sessionId: localStorage.getItem('session_id'),
-      sessionKey: localStorage.getItem('session_key'),
-    }))
+    this.ws.addEventListener('open', () => {
+      this.ws.send(JSON.stringify({
+        type: 'get_dialog_list',
+        userId: localStorage.getItem('user_id'),
+        sessionId: localStorage.getItem('session_id'),
+        sessionKey: localStorage.getItem('session_key'),
+      }))
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.ws.addEventListener('message', (res: any) => {
