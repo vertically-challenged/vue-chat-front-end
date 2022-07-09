@@ -48,6 +48,7 @@ export default defineComponent({
   --color-6: red;
   --color-7: rgba(50, 50, 50, 0.25);
   --color-8: rgb(98, 98, 98);
+  --color-9: rgba(0, 0, 144, 0.597);
 
   /* Transitions */
   --transition-default: .5s;

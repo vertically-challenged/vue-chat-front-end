@@ -14,6 +14,7 @@ import MessageList from './MessageList.vue'
 interface IMessage {
   userId: number
   text: string
+  userName: string
 }
 
 export default defineComponent({
@@ -50,6 +51,7 @@ export default defineComponent({
         this.messages.push({
           userId: resObj.userId,
           text: resObj.message,
+          userName: resObj.name,
         })
       }
       if (resObj.status === 'get_dialog_list') {
@@ -57,6 +59,7 @@ export default defineComponent({
         this.messages = resObj.messages.map((message: any) => ({
           userId: message.sender,
           text: message.message,
+          userName: message.name,
         }))
       }
     })

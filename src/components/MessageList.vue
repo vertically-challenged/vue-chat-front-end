@@ -10,7 +10,10 @@
       }"
     >
       <li class="message">
-        <pre>{{message.text}}</pre>
+        <div class="message__user-name">{{message.userName}}</div>
+        <div>
+          <pre>{{message.text}}</pre>
+        </div>
       </li>
       <visibility-sensor
         v-if="messages.length - 1 === index"
@@ -42,11 +45,9 @@ export default defineComponent({
   methods: {
     setScroll(status: boolean) {
       this.scroll = status
-      console.log('STATUS: ', this.scroll)
     },
   },
   updated() {
-    console.log('UPDATED')
     if (this.scroll) {
       ((this.$refs.messageList as HTMLDivElement)
         .childNodes[(this.$refs.messageList as HTMLDivElement)
@@ -76,10 +77,12 @@ export default defineComponent({
 }
 .message {
   display: inline-flex;
+  flex-direction: column;
   max-width: 330px;
   padding: 10px 15px;
   background: var(--color-8);
   border-radius: 18px;
+  margin-right: 10px;
 }
 
 .message__container {
@@ -92,6 +95,13 @@ export default defineComponent({
 
 .you-message {
   text-align: right;
+}
+
+.message__user-name {
+  font-size: 12px;
+  text-decoration: underline;
+  color: var(--color-9);
+  margin-bottom: 5px;
 }
 
 @media (max-width: 450px) {
