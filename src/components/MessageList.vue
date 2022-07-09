@@ -1,7 +1,14 @@
 <template>
 <section class="message-list__container">
   <ul ref="messageList" class="message-list">
-    <div class="message__container" v-for="(message, index) in messages" :key="message.id">
+    <div
+      class="message__container"
+      v-for="(message, index) in messages"
+      :key="JSON.stringify(message)"
+      :class="{
+        'you-message': Number(message.userId) === youId
+      }"
+    >
       <li class="message">
         <pre>{{message.text}}</pre>
       </li>
@@ -23,6 +30,7 @@ export default defineComponent({
   data() {
     return {
       scroll: true,
+      youId: Number(localStorage.getItem('user_id')),
     }
   },
   props: {
@@ -80,6 +88,10 @@ export default defineComponent({
 
 .message__container:last-child {
   margin-bottom: 0;
+}
+
+.you-message {
+  text-align: right;
 }
 
 @media (max-width: 450px) {
