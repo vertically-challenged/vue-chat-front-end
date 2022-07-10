@@ -34,15 +34,24 @@ export default defineComponent({
       ws: (state: any) => (state.ws.ws),
     }),
   },
-  mounted() {
-    this.ws.addEventListener('open', () => {
+  methods: {
+    getDialog() {
       this.ws.send(JSON.stringify({
         type: 'get_dialog_list',
         userId: localStorage.getItem('user_id'),
         sessionId: localStorage.getItem('session_id'),
         sessionKey: localStorage.getItem('session_key'),
       }))
-    })
+    },
+  },
+  mounted() {
+    try {
+      this.getDialog()
+    } catch (error) {
+      this.ws.addEventListener('open', () => {
+        this.getDialog()
+      })
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.ws.addEventListener('message', (res: any) => {

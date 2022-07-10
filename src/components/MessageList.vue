@@ -21,6 +21,7 @@
         :scrollArea="'messageList'"
       />
     </div>
+    <div/>
   </ul>
 </section>
 </template>
@@ -46,13 +47,20 @@ export default defineComponent({
     setScroll(status: boolean) {
       this.scroll = status
     },
+    scrollDown() {
+      if (this.scroll) {
+        try {
+          ((this.$refs.messageList as HTMLDivElement)
+            .childNodes[(this.$refs.messageList as HTMLDivElement)
+              .childNodes.length - 1] as HTMLDivElement).scrollIntoView()
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
   },
   updated() {
-    if (this.scroll) {
-      ((this.$refs.messageList as HTMLDivElement)
-        .childNodes[(this.$refs.messageList as HTMLDivElement)
-          .childNodes.length - 2] as HTMLDivElement).scrollIntoView()
-    }
+    this.scrollDown()
   },
 })
 </script>
