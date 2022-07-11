@@ -68,7 +68,7 @@ body {
 
 .container {
   position: fixed;
-  top: calc(50vh - 250px);
+  bottom: 0;
   left: 0;
   right: 0;
   display: flex;

@@ -37,6 +37,7 @@ export default defineComponent({
     changeInput(event: Event) {
       if (event.target) {
         this.message = (event.target as HTMLDivElement).innerText
+        this.$emit('changeInput', this.$refs.inputRef)
       }
     },
     sendMessage() {
@@ -50,6 +51,7 @@ export default defineComponent({
         }))
         this.message = '';
         (this.$refs.inputRef as HTMLDivElement).innerText = ''
+        this.$emit('changeInput', this.$refs.inputRef)
       }
     },
   },

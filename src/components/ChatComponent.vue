@@ -1,12 +1,17 @@
 <template>
 <section class="chat">
-  <message-list :messages="messages"></message-list>
-  <chat-input></chat-input>
+  <message-list
+    :style="{maxHeight: `calc(100vh - 149px - ${messageListHeight}px)`}"
+    ref="messageListRef"
+    :messages="messages"
+    >
+    </message-list>
+  <chat-input @changeInput="resizeMessageList"></chat-input>
 </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, Ref } from 'vue'
 import { mapState } from 'vuex'
 import ChatInput from './ChatInput.vue'
 import MessageList from './MessageList.vue'
@@ -22,6 +27,7 @@ export default defineComponent({
     const messages: Array<IMessage> = []
     return {
       messages,
+      messageListHeight: 0,
     }
   },
   components: {
@@ -42,6 +48,13 @@ export default defineComponent({
         sessionId: localStorage.getItem('session_id'),
         sessionKey: localStorage.getItem('session_key'),
       }))
+    },
+    resizeMessageList(inputRef: Ref) {
+      const inputSize = ((inputRef as unknown) as HTMLDivElement).offsetHeight
+      if (inputSize === 21) this.messageListHeight = 0
+      if (inputSize === 42) this.messageListHeight = 42
+      if (inputSize === 63) this.messageListHeight = 63
+      if (inputSize === 80) this.messageListHeight = 70
     },
   },
   mounted() {
@@ -80,6 +93,8 @@ export type { IMessage }
 
 <style lang="css" scoped>
 .chat {
+  position: absolute;
+  bottom: 0;
   padding: 10px;
   max-width: 100vw;
 }

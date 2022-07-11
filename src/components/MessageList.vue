@@ -1,6 +1,6 @@
 <template>
 <section class="message-list__container">
-  <ul ref="messageList" class="message-list">
+  <ul ref="messageList" class="message-list" v-bind="$attrs">
     <div
       class="message__container"
       v-for="(message, index) in messages"
@@ -29,6 +29,7 @@ import { defineComponent, PropType } from 'vue'
 import { IMessage } from './ChatComponent.vue'
 
 export default defineComponent({
+  inheritAttrs: false,
   data() {
     return {
       scroll: true,
@@ -68,8 +69,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   list-style: none;
-  height: 400px;
-  max-height: calc(90vh - 150px);
+  height: 100vh;
+  height: calc(100vh - 170px);
   overflow-y: scroll;
   border-radius: 18px;
 }
@@ -119,10 +120,6 @@ export default defineComponent({
   .message {
     width: 80%;
     max-width: 300px;
-  }
-
-  .message-list {
-    height: 76vh;
   }
 
   .message-list::-webkit-scrollbar {
