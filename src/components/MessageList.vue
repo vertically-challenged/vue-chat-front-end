@@ -11,9 +11,7 @@
     >
       <li class="message">
         <div class="message__user-name">{{message.userName}}</div>
-        <div>
-          <pre>{{message.text}}</pre>
-        </div>
+        <div class="message__text">{{message.text}}</div>
       </li>
       <visibility-sensor
         v-if="messages.length - 1 === index"
@@ -110,6 +108,11 @@ export default defineComponent({
   text-decoration: underline;
   color: var(--color-9);
   margin-bottom: 5px;
+}
+
+.message__text {
+  word-wrap: break-word;
+  text-align: left;
 }
 
 @media (max-width: 450px) {
