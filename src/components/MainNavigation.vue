@@ -1,6 +1,8 @@
 <template>
   <nav class="main-navigation">
     <div class="main-navigation__container">
+    <h1 class="main-navigation__header">VueChat</h1>
+    <div class="main-navigation__nav-links">
       <router-link
         v-if="!auth"
         class="main-navigation__link"
@@ -22,6 +24,7 @@
       >
         Выйти
       </button>
+    </div>
     </div>
   </nav>
 </template>
@@ -70,11 +73,15 @@ export default defineComponent({
 .main-navigation__container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100vw;
   max-width: 900px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+.main-navigation__header {
+  color: var(--color-2)
 }
 
 .main-navigation__link {

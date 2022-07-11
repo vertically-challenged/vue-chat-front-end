@@ -63,7 +63,7 @@ export default defineComponent({
 }
 
 body {
-  background: var(--color-8);
+  background: url('./bg.jpg')
 }
 
 .container {
