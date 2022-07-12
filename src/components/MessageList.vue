@@ -1,4 +1,5 @@
 <template>
+
 <section class="message-list__container">
   <ul ref="messageList" class="message-list" v-bind="$attrs">
     <div
@@ -71,6 +72,7 @@ export default defineComponent({
   list-style: none;
   height: calc(100vh - 241px);
   overflow-y: scroll;
+  overflow-x: hidden;
   border-radius: 18px;
 }
 
@@ -93,6 +95,10 @@ export default defineComponent({
 
 .message__container {
   margin-bottom: 20px;
+  animation: .5s show ease-in-out;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  margin-left: -420px;
 }
 
 .message__container:last-child {
@@ -101,6 +107,8 @@ export default defineComponent({
 
 .you-message {
   text-align: right;
+  margin-left: 0px;
+  margin-right: -420px;
 }
 
 .message__user-name {
@@ -113,6 +121,14 @@ export default defineComponent({
 .message__text {
   word-wrap: break-word;
   text-align: left;
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 @media (max-width: 450px) {

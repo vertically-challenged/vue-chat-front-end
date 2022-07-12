@@ -1,13 +1,15 @@
 <template>
-<section class="chat">
-  <message-list
-    :style="{maxHeight: `calc(100vh - 200px - ${messageListHeight}px)`}"
-    ref="messageListRef"
-    :messages="messages"
-    >
-    </message-list>
-  <chat-input @changeInput="resizeMessageList"></chat-input>
-</section>
+<div class="chat-container">
+  <section class="chat">
+    <message-list
+      :style="{maxHeight: `calc(100vh - 200px - ${messageListHeight}px)`}"
+      ref="messageListRef"
+      :messages="messages"
+      >
+      </message-list>
+    <chat-input @changeInput="resizeMessageList"></chat-input>
+  </section>
+</div>
 </template>
 
 <script lang="ts">
@@ -95,5 +97,16 @@ export type { IMessage }
   bottom: 0;
   padding: 10px;
   max-width: 100vw;
+}
+
+.chat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
