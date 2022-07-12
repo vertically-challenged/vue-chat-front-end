@@ -27,7 +27,7 @@ export default defineComponent({
     const messages: Array<IMessage> = []
     return {
       messages,
-      messageListHeight: 0,
+      messageListHeight: 41,
     }
   },
   components: {
@@ -50,11 +50,9 @@ export default defineComponent({
       }))
     },
     resizeMessageList(inputRef: Ref) {
+      console.log(((inputRef as unknown) as HTMLDivElement).offsetHeight)
       const inputSize = ((inputRef as unknown) as HTMLDivElement).offsetHeight
-      if (inputSize === 21) this.messageListHeight = 0
-      if (inputSize === 42) this.messageListHeight = 42
-      if (inputSize === 63) this.messageListHeight = 63
-      if (inputSize === 80) this.messageListHeight = 70
+      this.messageListHeight = inputSize
     },
   },
   mounted() {

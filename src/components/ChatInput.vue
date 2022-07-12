@@ -1,5 +1,5 @@
 <template>
-<div class="chat-input__container">
+<div class="chat-input__container" ref="inputContainerRef">
   <div
     class="chat-input"
     placeholder="Сообщение..."
@@ -37,7 +37,7 @@ export default defineComponent({
     changeInput(event: Event) {
       if (event.target) {
         this.message = (event.target as HTMLDivElement).innerText
-        this.$emit('changeInput', this.$refs.inputRef)
+        this.$emit('changeInput', this.$refs.inputContainerRef)
       }
     },
     sendMessage() {

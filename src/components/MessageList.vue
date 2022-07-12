@@ -69,7 +69,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   list-style: none;
-  height: calc(100vh - 221px);
+  height: calc(100vh - 241px);
   overflow-y: scroll;
   border-radius: 18px;
 }
