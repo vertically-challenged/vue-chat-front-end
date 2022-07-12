@@ -1,7 +1,7 @@
 <template>
 <section class="chat">
   <message-list
-    :style="{maxHeight: `calc(100vh - 149px - ${messageListHeight}px)`}"
+    :style="{maxHeight: `calc(100vh - 200px - ${messageListHeight}px)`}"
     ref="messageListRef"
     :messages="messages"
     >
