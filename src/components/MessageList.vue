@@ -133,7 +133,6 @@ export default defineComponent({
 
 @media (max-width: 450px) {
   .message {
-    width: 80%;
     max-width: 300px;
   }
 

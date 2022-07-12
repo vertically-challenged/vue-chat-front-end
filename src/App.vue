@@ -1,8 +1,6 @@
 <template>
 <main-navigation/>
 <router-view />
-<div class="container">
-</div>
 </template>
 
 <script lang="ts">
@@ -64,17 +62,6 @@ export default defineComponent({
 
 body {
   background: var(--color-8);
-}
-
-.container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 ::-webkit-scrollbar {
