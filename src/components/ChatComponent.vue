@@ -4,6 +4,7 @@
     <message-list
       :style="{maxHeight: `calc(100vh - 200px - ${messageListHeight}px)`}"
       ref="messageListRef"
+      :messageListHeight="messageListHeight"
       :messages="messages"
       >
       </message-list>

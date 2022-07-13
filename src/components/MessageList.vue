@@ -42,6 +42,7 @@ export default defineComponent({
       type: Array as PropType<Array<IMessage>>,
       required: true,
     },
+    messageListHeight: Number,
   },
   methods: {
     setScroll(status: boolean) {
@@ -58,9 +59,31 @@ export default defineComponent({
         }
       }
     },
+    telegramResize() {
+      let { clientHeight } = this.$refs.messageList as HTMLDivElement
+
+      const resizeObserver = new ResizeObserver((entries) => {
+        const top = (this.$refs.messageList as HTMLDivElement).scrollTop
+        const { scrollHeight } = this.$refs.messageList as HTMLDivElement
+        const blockHeight = entries[0].borderBoxSize[0].blockSize
+        if (clientHeight > blockHeight) {
+          (this.$refs.messageList as HTMLDivElement).scrollTop = top + (clientHeight - blockHeight)
+        } else {
+          const newTop = top - (blockHeight - clientHeight)
+          if (scrollHeight - blockHeight > top) {
+            (this.$refs.messageList as HTMLDivElement).scrollTop = newTop
+          }
+        }
+        clientHeight = (this.$refs.messageList as HTMLDivElement).clientHeight
+      })
+      resizeObserver.observe((this.$refs.messageList as Element))
+    },
   },
   updated() {
     this.scrollDown()
+  },
+  mounted() {
+    this.telegramResize()
   },
 })
 </script>
