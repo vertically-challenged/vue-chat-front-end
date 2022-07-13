@@ -18,8 +18,7 @@ export default defineComponent({
       rootMargin: '0px',
       threshold: 1.0,
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const callback = (entries: any) => {
+    const callback = (entries:IntersectionObserverEntry[]) => {
       if (entries[0].isIntersecting) {
         // visible
         this.$emit('observe', true)
