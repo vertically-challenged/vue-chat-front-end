@@ -53,7 +53,6 @@ export default defineComponent({
       }))
     },
     resizeMessageList(inputRef: Ref) {
-      console.log(((inputRef as unknown) as HTMLDivElement).offsetHeight)
       const inputSize = ((inputRef as unknown) as HTMLDivElement).offsetHeight
       this.messageListHeight = inputSize
     },

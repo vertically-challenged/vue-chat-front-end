@@ -12,7 +12,8 @@
     >
       <li class="message">
         <div class="message__user-name">{{message.userName}}</div>
-        <div class="message__text">{{message.text}}</div>
+        <div v-html="marked(message.text, { sanitize: true })" class="message__text">
+        </div>
       </li>
       <visibility-sensor
         v-if="messages.length - 1 === index"
@@ -27,12 +28,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { marked } from 'marked'
 import { IMessage } from './ChatComponent.vue'
 
 export default defineComponent({
   inheritAttrs: false,
   data() {
     return {
+      marked,
       scroll: true,
       youId: Number(localStorage.getItem('user_id')),
     }
