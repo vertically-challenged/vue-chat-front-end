@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { mapState } from 'vuex'
+import serverConnect, { IResObj } from '@/serverConnect'
 
 export default defineComponent({
   data() {
@@ -35,32 +35,23 @@ export default defineComponent({
       unauthorizedMessage: '',
     }
   },
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ws: (state: any) => (state.ws.ws),
-    }),
-  },
   methods: {
     login() {
-      this.ws.send(JSON.stringify({
-        type: 'authorization',
-        ...this.authorizationData,
-      }))
+      serverConnect.authorization.login(this.authorizationData)
     },
   },
   mounted() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.ws.addEventListener('message', (res: any) => {
-      const resObj = JSON.parse(res.data)
-      if (resObj.status === 'authorized') {
-        this.$store.commit('sessions/login')
-        localStorage.setItem('user_id', resObj.userId)
+    serverConnect.authorization.subscribeToLoginPositiveResponse((resObj: IResObj) => {
+      this.$store.commit('sessions/login')
+      if (resObj.userId && resObj.sessionId && resObj.sessionKey) {
+        localStorage.setItem('user_id', String(resObj.userId))
         localStorage.setItem('session_id', resObj.sessionId)
         localStorage.setItem('session_key', resObj.sessionKey)
-        this.$router.push('/chat')
       }
-      if (resObj.status === 'unauthorized') {
+      this.$router.push('/chat')
+    })
+    serverConnect.authorization.subscribeToLoginNegativeResponse((resObj: IResObj) => {
+      if (resObj.message) {
         this.unauthorizedMessage = resObj.message
       }
     })

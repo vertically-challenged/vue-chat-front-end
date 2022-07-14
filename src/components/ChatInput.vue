@@ -19,19 +19,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { mapState } from 'vuex'
+import serverConnect from '@/serverConnect'
 
 export default defineComponent({
   data() {
     return {
       message: '',
     }
-  },
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ws: (state: any) => (state.ws.ws),
-    }),
   },
   methods: {
     changeInput(event: Event) {
@@ -42,13 +36,7 @@ export default defineComponent({
     },
     sendMessage() {
       if (this.message) {
-        this.ws.send(JSON.stringify({
-          type: 'send_message',
-          userId: localStorage.getItem('user_id'),
-          sessionId: localStorage.getItem('session_id'),
-          sessionKey: localStorage.getItem('session_key'),
-          message: this.message,
-        }))
+        serverConnect.dialog.sendMessage(this.message)
         this.message = '';
         (this.$refs.inputRef as HTMLDivElement).innerText = ''
         this.$emit('changeInput', this.$refs.inputRef)

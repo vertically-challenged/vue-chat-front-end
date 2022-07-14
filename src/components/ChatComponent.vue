@@ -15,14 +15,14 @@
 
 <script lang="ts">
 import { defineComponent, Ref } from 'vue'
-import { mapState } from 'vuex'
+import serverConnect, { IResObj } from '@/serverConnect'
 import ChatInput from './ChatInput.vue'
 import MessageList from './MessageList.vue'
 
 interface IMessage {
-  userId: number
-  text: string
-  userName: string
+  userId: number | string | undefined
+  text: string | undefined
+  userName: string | undefined
 }
 
 export default defineComponent({
@@ -37,53 +37,33 @@ export default defineComponent({
     ChatInput,
     MessageList,
   },
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ws: (state: any) => (state.ws.ws),
-    }),
-  },
   methods: {
-    getDialog() {
-      this.ws.send(JSON.stringify({
-        type: 'get_dialog_list',
-        userId: localStorage.getItem('user_id'),
-        sessionId: localStorage.getItem('session_id'),
-        sessionKey: localStorage.getItem('session_key'),
-      }))
-    },
     resizeMessageList(inputRef: Ref) {
       const inputSize = ((inputRef as unknown) as HTMLDivElement).offsetHeight
       this.messageListHeight = inputSize
     },
   },
   mounted() {
-    try {
-      this.getDialog()
-    } catch (error) {
-      this.ws.addEventListener('open', () => {
-        this.getDialog()
-      })
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.ws.addEventListener('message', (res: any) => {
-      const resObj = JSON.parse(res.data)
-      if (resObj.status === 'new_message') {
-        this.messages.push({
-          userId: resObj.userId,
-          text: resObj.message,
-          userName: resObj.name,
-        })
-      }
-      if (resObj.status === 'get_dialog_list') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.messages = resObj.messages.map((message: any) => ({
+    serverConnect.dialog.requestDialog()
+    serverConnect.dialog.subscribeToReceiveDialogue((resObj: IResObj) => {
+      if (resObj.messages) {
+        this.messages = resObj.messages.map((message: {
+        sender: number | string
+        message: string
+        name: string
+      }) => ({
           userId: message.sender,
           text: message.message,
           userName: message.name,
         }))
       }
+    })
+    serverConnect.dialog.subscribeToNewMessage((resObj: IResObj) => {
+      this.messages.push({
+        userId: resObj.userId,
+        text: resObj.message,
+        userName: resObj.name,
+      })
     })
   },
 })

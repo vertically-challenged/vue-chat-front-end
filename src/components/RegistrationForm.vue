@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { mapState } from 'vuex'
+import serverConnect, { IResObj } from '@/serverConnect'
 
 export default defineComponent({
   data() {
@@ -42,28 +42,17 @@ export default defineComponent({
       unregisteredMessage: '',
     }
   },
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ws: (state: any) => (state.ws.ws),
-    }),
-  },
   methods: {
     userRegistration() {
-      this.ws.send(JSON.stringify({
-        type: 'registration',
-        ...this.registrationData,
-      }))
+      serverConnect.authorization.registration(this.registrationData)
     },
   },
   mounted() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.ws.addEventListener('message', (res: any) => {
-      const resObj = JSON.parse(res.data)
-      if (resObj.status === 'registered') {
-        this.$router.push('/login')
-      }
-      if (resObj.status === 'unregistered') {
+    serverConnect.authorization.subscribeToRegistrationPositiveResponse(() => {
+      this.$router.push('/login')
+    })
+    serverConnect.authorization.subscribeToRegistrationNegativeResponse((resObj: IResObj) => {
+      if (resObj.message) {
         this.unregisteredMessage = resObj.message
       }
     })

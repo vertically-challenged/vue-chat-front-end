@@ -32,27 +32,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
+import serverConnect from '@/serverConnect'
 
 export default defineComponent({
   computed: {
     ...mapState({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       auth: (state: any) => (state.sessions.sessions.auth),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ws: (state: any) => (state.ws.ws),
     }),
   },
   methods: {
     logout() {
-      this.ws.send(JSON.stringify({
-        type: 'session_termination',
-        userId: localStorage.getItem('user_id'),
-        sessionId: localStorage.getItem('session_id'),
-        sessionKey: localStorage.getItem('session_key'),
-      }))
-      localStorage.removeItem('user_id')
-      localStorage.removeItem('session_id')
-      localStorage.removeItem('session_key')
+      serverConnect.authorization.logout()
       this.$store.commit('sessions/logout')
       this.$router.push('/login')
     },
