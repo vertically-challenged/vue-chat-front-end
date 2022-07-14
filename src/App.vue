@@ -64,6 +64,13 @@ body {
   background: var(--color-8);
 }
 
+img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 300px;
+  border-radius: 20px;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   background-color: transparent;
