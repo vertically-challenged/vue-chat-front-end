@@ -44,8 +44,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    serverConnect.dialog.requestDialog()
-    serverConnect.dialog.subscribeToReceiveDialogue((resObj: IResObj) => {
+    serverConnect.dialog.requestDialog((resObj: IResObj) => {
       if (resObj.messages) {
         this.messages = resObj.messages.map((message: {
         sender: number | string

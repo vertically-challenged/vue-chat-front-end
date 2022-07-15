@@ -94,6 +94,7 @@ export default defineComponent({
 }
 
 .chat-input__button img {
+  margin: 0;
   width: 30px;
   opacity: .5;
   transition: var(--transition-default);

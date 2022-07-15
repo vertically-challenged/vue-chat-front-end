@@ -67,8 +67,12 @@ body {
 img {
   margin-top: 10px;
   margin-bottom: 10px;
-  max-width: 300px;
+  max-width: 100%;
   border-radius: 20px;
+}
+
+li {
+  margin-left: 20px;
 }
 
 ::-webkit-scrollbar {

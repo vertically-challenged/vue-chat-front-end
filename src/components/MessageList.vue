@@ -117,6 +117,7 @@ export default defineComponent({
   background: var(--color-8);
   border-radius: 18px;
   margin-right: 10px;
+  margin-left: 0;
 }
 
 .message__container {
